@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/.tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/temp" />
+      <excludeFolder url="file://$MODULE_DIR$/tmp" />
+    </content>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///etc/perl" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///etc/perl" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///usr/local/lib/x86_64-linux-gnu/perl/5.22.1" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/local/lib/x86_64-linux-gnu/perl/5.22.1" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///usr/local/share/perl/5.22.1" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/local/share/perl/5.22.1" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///usr/lib/x86_64-linux-gnu/perl5/5.22" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/lib/x86_64-linux-gnu/perl5/5.22" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///usr/share/perl5" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/share/perl5" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///usr/lib/x86_64-linux-gnu/perl/5.22" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/lib/x86_64-linux-gnu/perl/5.22" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///usr/share/perl/5.22" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/share/perl/5.22" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///usr/lib/x86_64-linux-gnu/perl-base" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/lib/x86_64-linux-gnu/perl-base" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///etc/perl" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///etc/perl" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///usr/local/lib/x86_64-linux-gnu/perl/5.22.1" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/local/lib/x86_64-linux-gnu/perl/5.22.1" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///usr/local/share/perl/5.22.1" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/local/share/perl/5.22.1" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///usr/lib/x86_64-linux-gnu/perl5/5.22" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/lib/x86_64-linux-gnu/perl5/5.22" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///usr/share/perl5" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/share/perl5" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///usr/lib/x86_64-linux-gnu/perl/5.22" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/lib/x86_64-linux-gnu/perl/5.22" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///usr/share/perl/5.22" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/share/perl/5.22" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///usr/lib/x86_64-linux-gnu/perl-base" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/lib/x86_64-linux-gnu/perl-base" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///etc/perl" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///etc/perl" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///usr/local/lib/x86_64-linux-gnu/perl/5.22.1" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/local/lib/x86_64-linux-gnu/perl/5.22.1" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///usr/local/share/perl/5.22.1" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/local/share/perl/5.22.1" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///usr/lib/x86_64-linux-gnu/perl5/5.22" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/lib/x86_64-linux-gnu/perl5/5.22" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///usr/share/perl5" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/share/perl5" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///usr/lib/x86_64-linux-gnu/perl/5.22" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/lib/x86_64-linux-gnu/perl/5.22" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///usr/share/perl/5.22" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/share/perl/5.22" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///usr/lib/x86_64-linux-gnu/perl-base" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/lib/x86_64-linux-gnu/perl-base" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///etc/perl" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///etc/perl" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///usr/local/lib/x86_64-linux-gnu/perl/5.22.1" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/local/lib/x86_64-linux-gnu/perl/5.22.1" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///usr/local/share/perl/5.22.1" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/local/share/perl/5.22.1" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///usr/lib/x86_64-linux-gnu/perl5/5.22" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/lib/x86_64-linux-gnu/perl5/5.22" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///usr/share/perl5" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/share/perl5" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///usr/lib/x86_64-linux-gnu/perl/5.22" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/lib/x86_64-linux-gnu/perl/5.22" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///usr/share/perl/5.22" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/share/perl/5.22" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///usr/lib/x86_64-linux-gnu/perl-base" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/lib/x86_64-linux-gnu/perl-base" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+  </component>
+</module>

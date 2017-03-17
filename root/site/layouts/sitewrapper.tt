@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>[% page.title || "CatalystBlog" %]</title>
+
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/blog.css" rel="stylesheet">
+</head>
+
+
+<body>
+
+<div class="blog-masthead">
+    <div class="container">
+        <nav class="blog-nav">
+            <a class="blog-nav-item active" href="/">Home</a>
+            <a class="blog-nav-item" href="/login">Login</a>
+            <a class="blog-nav-item" href="/register">Register</a>
+            <a class="blog-nav-item" href="/addpost">Add Post</a>
+        </nav>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="blog-header">
+        <h1 class="blog-title">Catalyst Blog</h1>
+        <p class="lead blog-description">Simple-Blog System Using PERL Catalyst Framework.</p>
+    </div>
+
+
+    [% content %]
+
+</div>
+
+<footer class="blog-footer">
+    <p>CatalystBlog by <a href="https://github.com/MoustafaElkady">@MoustafaElkady</a>.</p>
+    <p>
+        <a href="#">Back to top</a>
+    </p>
+</footer>
+
+
+</body>
+
+
+</html>

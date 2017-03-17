@@ -1,0 +1,7 @@
+[% IF no_wrapper;
+    content;
+ELSE;
+    wrapper = wrapper || 'site/layouts/sitewrapper.tt';
+    content WRAPPER $wrapper;
+END;
+-%]

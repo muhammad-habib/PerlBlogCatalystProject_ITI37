@@ -1,0 +1,17 @@
+[% # Some basic HTML with a loop to display books -%]
+<table>
+    <tr><th>Title</th><th>Rating</th><th>Author(s)</th><th>Links</th></tr>
+    [% # Display each book in a table row %]
+    [% FOREACH user IN users -%]
+        <tr>
+            <td>[% user.username %]</td>
+            <td>[% user.email %]</td>
+
+            <td>
+                [% # Add a link to delete a book %]
+                <a href="[%
+                    c.uri_for(c.controller.action_for('delete'), [user.id]) %]">Delete</a>
+            </td>
+        </tr>
+    [% END -%]
+</table>
