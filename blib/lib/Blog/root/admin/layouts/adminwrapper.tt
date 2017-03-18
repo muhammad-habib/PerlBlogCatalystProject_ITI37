@@ -1,0 +1,11 @@
+<div class="container">
+
+    <div class="blog-header">
+        <h1 class="blog-title">Catalyst Blog</h1>
+        <p class="lead blog-description">Simple-Blog System Using PERL Catalyst Framework.</p>
+    </div>
+
+
+    [% content %]
+
+</div>

@@ -20,7 +20,7 @@
 #     LICENSE => q[perl]
 #     NAME => q[Blog]
 #     NO_META => q[1]
-#     PREREQ_PM => { Catalyst::Action::RenderView=>q[0], Catalyst::Controller::HTML::FormFu=>q[0], Catalyst::Controller::REST=>q[0], Catalyst::Plugin::ConfigLoader=>q[0], Catalyst::Plugin::StackTrace=>q[0], Catalyst::Plugin::Static::Simple=>q[0], Catalyst::Runtime=>q[5.90114], Config::General=>q[0], ExtUtils::MakeMaker=>q[6.36], HTML::FormFu=>q[0], HTML::FormFu::Model::DBIC=>q[0], Moose=>q[0], Test::More=>q[0.88], namespace::autoclean=>q[0] }
+#     PREREQ_PM => { Catalyst::Action::RenderView=>q[0], Catalyst::Controller::REST=>q[0], Catalyst::Plugin::ConfigLoader=>q[0], Catalyst::Plugin::StackTrace=>q[0], Catalyst::Plugin::Static::Simple=>q[0], Catalyst::Plugin::StatusMessage=>q[0], Catalyst::Runtime=>q[5.90114], Config::General=>q[0], Data::Dumper=>q[0], ExtUtils::MakeMaker=>q[6.36], HTML::FormHandler::Model::DBIC=>q[0], Moose=>q[0], Test::More=>q[0.88], namespace::autoclean=>q[0] }
 #     TEST_REQUIRES => {  }
 #     VERSION => q[0.01]
 #     VERSION_FROM => q[lib/Blog.pm]
@@ -132,8 +132,8 @@ MAKE_APERL_FILE = Makefile.aperl
 PERLMAINCC = $(CC)
 PERL_INC = /usr/lib/x86_64-linux-gnu/perl/5.22/CORE
 PERL_INCDEP = /usr/lib/x86_64-linux-gnu/perl/5.22/CORE
-PERL = "/usr/bin/perl" "-Iinc"
-FULLPERL = "/usr/bin/perl" "-Iinc"
+PERL = "/usr/bin/perl5" "-Iinc"
+FULLPERL = "/usr/bin/perl5" "-Iinc"
 ABSPERL = $(PERL)
 PERLRUN = $(PERL)
 FULLPERLRUN = $(FULLPERL)
@@ -176,8 +176,8 @@ MAN1PODS = script/blog_cgi.pl \
 	script/blog_server.pl \
 	script/blog_test.pl
 MAN3PODS = lib/Blog.pm \
+	lib/Blog/Controller/Auth.pm \
 	lib/Blog/Controller/Root.pm \
-	lib/Blog/Controller/Users.pm \
 	lib/Blog/Model/DB.pm \
 	lib/Blog/Schema/Result/User.pm \
 	lib/Blog/View/HTML.pm
@@ -208,6 +208,7 @@ TO_INST_PM = _Deparsed_XSubs.pm \
 	lib/Blog/Controller/Auth.pm \
 	lib/Blog/Controller/Root.pm \
 	lib/Blog/Controller/Users.pm \
+	lib/Blog/Form/User.pm \
 	lib/Blog/Model/DB.pm \
 	lib/Blog/Schema.pm \
 	lib/Blog/Schema/Result/User.pm \
@@ -223,6 +224,8 @@ PM_TO_BLIB = _Deparsed_XSubs.pm \
 	blib/lib/Blog/Controller/Root.pm \
 	lib/Blog/Controller/Users.pm \
 	blib/lib/Blog/Controller/Users.pm \
+	lib/Blog/Form/User.pm \
+	blib/lib/Blog/Form/User.pm \
 	lib/Blog/Model/DB.pm \
 	blib/lib/Blog/Model/DB.pm \
 	lib/Blog/Schema.pm \
@@ -455,8 +458,8 @@ POD2MAN = $(POD2MAN_EXE)
 
 manifypods : pure_all  \
 	lib/Blog.pm \
+	lib/Blog/Controller/Auth.pm \
 	lib/Blog/Controller/Root.pm \
-	lib/Blog/Controller/Users.pm \
 	lib/Blog/Model/DB.pm \
 	lib/Blog/Schema/Result/User.pm \
 	lib/Blog/View/HTML.pm \
@@ -473,8 +476,8 @@ manifypods : pure_all  \
 	  script/blog_test.pl $(INST_MAN1DIR)/blog_test.pl.$(MAN1EXT) 
 	$(NOECHO) $(POD2MAN) --section=$(MAN3EXT) --perm_rw=$(PERM_RW) -u \
 	  lib/Blog.pm $(INST_MAN3DIR)/Blog.$(MAN3EXT) \
+	  lib/Blog/Controller/Auth.pm $(INST_MAN3DIR)/Blog::Controller::Auth.$(MAN3EXT) \
 	  lib/Blog/Controller/Root.pm $(INST_MAN3DIR)/Blog::Controller::Root.$(MAN3EXT) \
-	  lib/Blog/Controller/Users.pm $(INST_MAN3DIR)/Blog::Controller::Users.$(MAN3EXT) \
 	  lib/Blog/Model/DB.pm $(INST_MAN3DIR)/Blog::Model::DB.$(MAN3EXT) \
 	  lib/Blog/Schema/Result/User.pm $(INST_MAN3DIR)/Blog::Schema::Result::User.$(MAN3EXT) \
 	  lib/Blog/View/HTML.pm $(INST_MAN3DIR)/Blog::View::HTML.$(MAN3EXT) 
@@ -489,14 +492,26 @@ manifypods : pure_all  \
 
 EXE_FILES = script/blog_cgi.pl script/blog_create.pl script/blog_fastcgi.pl script/blog_server.pl script/blog_test.pl
 
-pure_all :: $(INST_SCRIPT)/blog_fastcgi.pl $(INST_SCRIPT)/blog_test.pl $(INST_SCRIPT)/blog_server.pl $(INST_SCRIPT)/blog_create.pl $(INST_SCRIPT)/blog_cgi.pl
+pure_all :: $(INST_SCRIPT)/blog_cgi.pl $(INST_SCRIPT)/blog_create.pl $(INST_SCRIPT)/blog_fastcgi.pl $(INST_SCRIPT)/blog_test.pl $(INST_SCRIPT)/blog_server.pl
 	$(NOECHO) $(NOOP)
 
 realclean ::
 	$(RM_F) \
+	  $(INST_SCRIPT)/blog_cgi.pl $(INST_SCRIPT)/blog_create.pl \
 	  $(INST_SCRIPT)/blog_fastcgi.pl $(INST_SCRIPT)/blog_test.pl \
-	  $(INST_SCRIPT)/blog_server.pl $(INST_SCRIPT)/blog_create.pl \
-	  $(INST_SCRIPT)/blog_cgi.pl 
+	  $(INST_SCRIPT)/blog_server.pl 
+
+$(INST_SCRIPT)/blog_cgi.pl : script/blog_cgi.pl $(FIRST_MAKEFILE) $(INST_SCRIPT)$(DFSEP).exists $(INST_BIN)$(DFSEP).exists
+	$(NOECHO) $(RM_F) $(INST_SCRIPT)/blog_cgi.pl
+	$(CP) script/blog_cgi.pl $(INST_SCRIPT)/blog_cgi.pl
+	$(FIXIN) $(INST_SCRIPT)/blog_cgi.pl
+	-$(NOECHO) $(CHMOD) $(PERM_RWX) $(INST_SCRIPT)/blog_cgi.pl
+
+$(INST_SCRIPT)/blog_create.pl : script/blog_create.pl $(FIRST_MAKEFILE) $(INST_SCRIPT)$(DFSEP).exists $(INST_BIN)$(DFSEP).exists
+	$(NOECHO) $(RM_F) $(INST_SCRIPT)/blog_create.pl
+	$(CP) script/blog_create.pl $(INST_SCRIPT)/blog_create.pl
+	$(FIXIN) $(INST_SCRIPT)/blog_create.pl
+	-$(NOECHO) $(CHMOD) $(PERM_RWX) $(INST_SCRIPT)/blog_create.pl
 
 $(INST_SCRIPT)/blog_fastcgi.pl : script/blog_fastcgi.pl $(FIRST_MAKEFILE) $(INST_SCRIPT)$(DFSEP).exists $(INST_BIN)$(DFSEP).exists
 	$(NOECHO) $(RM_F) $(INST_SCRIPT)/blog_fastcgi.pl
@@ -515,18 +530,6 @@ $(INST_SCRIPT)/blog_server.pl : script/blog_server.pl $(FIRST_MAKEFILE) $(INST_S
 	$(CP) script/blog_server.pl $(INST_SCRIPT)/blog_server.pl
 	$(FIXIN) $(INST_SCRIPT)/blog_server.pl
 	-$(NOECHO) $(CHMOD) $(PERM_RWX) $(INST_SCRIPT)/blog_server.pl
-
-$(INST_SCRIPT)/blog_create.pl : script/blog_create.pl $(FIRST_MAKEFILE) $(INST_SCRIPT)$(DFSEP).exists $(INST_BIN)$(DFSEP).exists
-	$(NOECHO) $(RM_F) $(INST_SCRIPT)/blog_create.pl
-	$(CP) script/blog_create.pl $(INST_SCRIPT)/blog_create.pl
-	$(FIXIN) $(INST_SCRIPT)/blog_create.pl
-	-$(NOECHO) $(CHMOD) $(PERM_RWX) $(INST_SCRIPT)/blog_create.pl
-
-$(INST_SCRIPT)/blog_cgi.pl : script/blog_cgi.pl $(FIRST_MAKEFILE) $(INST_SCRIPT)$(DFSEP).exists $(INST_BIN)$(DFSEP).exists
-	$(NOECHO) $(RM_F) $(INST_SCRIPT)/blog_cgi.pl
-	$(CP) script/blog_cgi.pl $(INST_SCRIPT)/blog_cgi.pl
-	$(FIXIN) $(INST_SCRIPT)/blog_cgi.pl
-	-$(NOECHO) $(CHMOD) $(PERM_RWX) $(INST_SCRIPT)/blog_cgi.pl
 
 
 
@@ -577,9 +580,9 @@ realclean_subdirs :
 # Delete temporary files (via clean) and also delete dist files
 realclean purge ::  clean realclean_subdirs
 	- $(RM_F) \
-	  $(MAKEFILE_OLD) $(FIRST_MAKEFILE) 
+	  $(FIRST_MAKEFILE) $(MAKEFILE_OLD) 
 	- $(RM_RF) \
-	  MYMETA.yml $(DISTVNAME) 
+	  $(DISTVNAME) MYMETA.yml 
 
 
 # --- MakeMaker metafile section:
@@ -815,7 +818,7 @@ $(FIRST_MAKEFILE) : Makefile.PL $(CONFIGDEP)
 
 # --- MakeMaker makeaperl section ---
 MAP_TARGET    = perl
-FULLPERL      = "/usr/bin/perl"
+FULLPERL      = "/usr/bin/perl5"
 
 $(MAP_TARGET) :: static $(MAKE_APERL_FILE)
 	$(MAKE) $(USEMAKEFILE) $(MAKE_APERL_FILE) $@
@@ -864,15 +867,15 @@ ppd :
 	$(NOECHO) $(ECHO) '    <AUTHOR>Habib,ali,mohamed</AUTHOR>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <IMPLEMENTATION>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Catalyst::Action::RenderView" />' >> $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Catalyst::Controller::HTML::FormFu" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Catalyst::Controller::REST" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Catalyst::Plugin::ConfigLoader" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Catalyst::Plugin::StackTrace" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Catalyst::Plugin::Static::Simple" />' >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Catalyst::Plugin::StatusMessage" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Catalyst::Runtime" VERSION="5.90114" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Config::General" />' >> $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '        <REQUIRE NAME="HTML::FormFu" />' >> $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '        <REQUIRE NAME="HTML::FormFu::Model::DBIC" />' >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Data::Dumper" />' >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '        <REQUIRE NAME="HTML::FormHandler::Model::DBIC" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Moose::" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="namespace::autoclean" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <ARCHITECTURE NAME="x86_64-linux-gnu-thread-multi-5.22" />' >> $(DISTNAME).ppd
@@ -890,6 +893,7 @@ pm_to_blib : $(FIRST_MAKEFILE) $(TO_INST_PM)
 	  lib/Blog/Controller/Auth.pm blib/lib/Blog/Controller/Auth.pm \
 	  lib/Blog/Controller/Root.pm blib/lib/Blog/Controller/Root.pm \
 	  lib/Blog/Controller/Users.pm blib/lib/Blog/Controller/Users.pm \
+	  lib/Blog/Form/User.pm blib/lib/Blog/Form/User.pm \
 	  lib/Blog/Model/DB.pm blib/lib/Blog/Model/DB.pm \
 	  lib/Blog/Schema.pm blib/lib/Blog/Schema.pm \
 	  lib/Blog/Schema/Result/User.pm blib/lib/Blog/Schema/Result/User.pm \
@@ -933,20 +937,20 @@ checkdeps ::
 	$(PERL) Makefile.PL --checkdeps
 
 installdeps ::
-	$(PERL) Makefile.PL --config= --installdeps=Catalyst::Controller::HTML::FormFu,0
+	$(NOECHO) $(NOOP)
 
 installdeps_notest ::
-	$(PERL) Makefile.PL --config=notest,1 --installdeps=Catalyst::Controller::HTML::FormFu,0
+	$(NOECHO) $(NOOP)
 
 upgradedeps ::
-	$(PERL) Makefile.PL --config= --upgradedeps=Catalyst::Controller::HTML::FormFu,0,Test::More,0.88,Catalyst::Runtime,5.90114,Catalyst::Plugin::ConfigLoader,0,Catalyst::Plugin::Static::Simple,0,Catalyst::Plugin::StackTrace,0,Catalyst::Action::RenderView,0,Moose,0,HTML::FormFu,0,HTML::FormFu::Model::DBIC,0,Catalyst::Controller::REST,0,namespace::autoclean,0,Config::General,0
+	$(PERL) Makefile.PL --config= --upgradedeps=Test::More,0.88,Catalyst::Runtime,5.90114,Catalyst::Plugin::ConfigLoader,0,Catalyst::Plugin::Static::Simple,0,Catalyst::Plugin::StackTrace,0,Catalyst::Action::RenderView,0,Moose,0,Data::Dumper,0,Catalyst::Plugin::StatusMessage,0,HTML::FormHandler::Model::DBIC,0,Catalyst::Controller::REST,0,namespace::autoclean,0,Config::General,0
 
 upgradedeps_notest ::
-	$(PERL) Makefile.PL --config=notest,1 --upgradedeps=Catalyst::Controller::HTML::FormFu,0,Test::More,0.88,Catalyst::Runtime,5.90114,Catalyst::Plugin::ConfigLoader,0,Catalyst::Plugin::Static::Simple,0,Catalyst::Plugin::StackTrace,0,Catalyst::Action::RenderView,0,Moose,0,HTML::FormFu,0,HTML::FormFu::Model::DBIC,0,Catalyst::Controller::REST,0,namespace::autoclean,0,Config::General,0
+	$(PERL) Makefile.PL --config=notest,1 --upgradedeps=Test::More,0.88,Catalyst::Runtime,5.90114,Catalyst::Plugin::ConfigLoader,0,Catalyst::Plugin::Static::Simple,0,Catalyst::Plugin::StackTrace,0,Catalyst::Action::RenderView,0,Moose,0,Data::Dumper,0,Catalyst::Plugin::StatusMessage,0,HTML::FormHandler::Model::DBIC,0,Catalyst::Controller::REST,0,namespace::autoclean,0,Config::General,0
 
 listdeps ::
-	@$(PERL) -le "print for @ARGV" Catalyst::Controller::HTML::FormFu
+	@$(PERL) -le "print for @ARGV" 
 
 listalldeps ::
-	@$(PERL) -le "print for @ARGV" Catalyst::Controller::HTML::FormFu Test::More Catalyst::Runtime Catalyst::Plugin::ConfigLoader Catalyst::Plugin::Static::Simple Catalyst::Plugin::StackTrace Catalyst::Action::RenderView Moose HTML::FormFu HTML::FormFu::Model::DBIC Catalyst::Controller::REST namespace::autoclean Config::General
+	@$(PERL) -le "print for @ARGV" Test::More Catalyst::Runtime Catalyst::Plugin::ConfigLoader Catalyst::Plugin::Static::Simple Catalyst::Plugin::StackTrace Catalyst::Action::RenderView Moose Data::Dumper Catalyst::Plugin::StatusMessage HTML::FormHandler::Model::DBIC Catalyst::Controller::REST namespace::autoclean Config::General
 

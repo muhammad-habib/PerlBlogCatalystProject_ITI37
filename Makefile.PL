@@ -15,9 +15,9 @@ requires 'Catalyst::Plugin::Static::Simple';
 requires 'Catalyst::Plugin::StackTrace';
 requires 'Catalyst::Action::RenderView';
 requires 'Moose';
-requires 'HTML::FormFu';
-requires 'Catalyst::Controller::HTML::FormFu';
-requires 'HTML::FormFu::Model::DBIC';
+requires 'Data::Dumper';
+requires 'Catalyst::Plugin::StatusMessage';
+requires 'HTML::FormHandler::Model::DBIC';
 requires 'Catalyst::Controller::REST';
 requires 'namespace::autoclean';
 requires 'Config::General'; # This should reflect the config file format you've chosen

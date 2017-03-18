@@ -79,6 +79,8 @@
         <entry key="/usr/lib/x86_64-linux-gnu/perl5/5.22/auto/Class/C3/XS/XS.so" value="1450436173000" />
         <entry key="/usr/lib/x86_64-linux-gnu/perl5/5.22/auto/Class/XSAccessor/XSAccessor.so" value="1450366302000" />
         <entry key="/usr/lib/x86_64-linux-gnu/perl5/5.22/auto/Clone/Clone.so" value="1450399055000" />
+        <entry key="/usr/lib/x86_64-linux-gnu/perl5/5.22/auto/DBD/mysql/mysql.so" value="1476366893000" />
+        <entry key="/usr/lib/x86_64-linux-gnu/perl5/5.22/auto/DBI/DBI.so" value="1450367645000" />
         <entry key="/usr/lib/x86_64-linux-gnu/perl5/5.22/auto/Data/Alias/Alias.so" value="1450390316000" />
         <entry key="/usr/lib/x86_64-linux-gnu/perl5/5.22/auto/Devel/Caller/Caller.so" value="1450439587000" />
         <entry key="/usr/lib/x86_64-linux-gnu/perl5/5.22/auto/Devel/LexAlias/LexAlias.so" value="1450472802000" />

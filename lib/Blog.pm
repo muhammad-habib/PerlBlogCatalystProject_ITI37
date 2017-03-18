@@ -22,6 +22,10 @@ use Catalyst qw/
     ConfigLoader
     Static::Simple
     StackTrace
+    StatusMessage
+    Session
+    Session::Store::FastMmap
+    Session::State::Cookie
 /;
 
 extends 'Catalyst';
@@ -43,37 +47,15 @@ __PACKAGE__->config(
     disable_component_resolution_regex_fallback => 1,
     enable_catalyst_header => 1, # Send X-Catalyst header
 );
-
+__PACKAGE__->config(
+    # Configure the view
+    'View::HTML' => {
+        #Set the location for TT files
+        INCLUDE_PATH => [
+            __PACKAGE__->path_to( 'root'),
+        ],
+    },
+);
 # Start the application
 __PACKAGE__->setup();
-
-=encoding utf8
-
-=head1 NAME
-
-Blog - Catalyst based application
-
-=head1 SYNOPSIS
-
-    script/blog_server.pl
-
-=head1 DESCRIPTION
-
-[enter your description here]
-
-=head1 SEE ALSO
-
-L<Blog::Controller::Root>, L<Catalyst>
-
-=head1 AUTHOR
-
-Habib,ali,mohamed
-
-=head1 LICENSE
-
-This library is free software. You can redistribute it and/or modify
-it under the same terms as Perl itself.
-
-=cut
-
 1;
