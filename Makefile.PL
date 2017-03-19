@@ -20,6 +20,11 @@ requires 'Catalyst::Plugin::StatusMessage';
 requires 'HTML::FormHandler::Model::DBIC';
 requires 'Catalyst::Controller::REST';
 requires 'namespace::autoclean';
+requires 'Catalyst::Plugin::Authentication';
+requires 'Catalyst::Plugin::Session';
+requires 'Catalyst::Plugin::Session::Store::Memcached';
+
+requires 'Catalyst::Plugin::Session::State::Cookie';
 requires 'Config::General'; # This should reflect the config file format you've chosen
                  # See Catalyst::Plugin::ConfigLoader for supported formats
 test_requires 'Test::More' => '0.88';

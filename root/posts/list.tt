@@ -2,16 +2,16 @@
 <table>
     <tr><th>Title</th><th>Rating</th><th>Author(s)</th><th>Links</th></tr>
     [% # Display each book in a table row %]
-    [% FOREACH user IN users -%]
+    [% FOREACH post IN posts -%]
         <tr>
-            <td>[% user.username %]</td>
-            <td>[% user.email %]</td>
+            <td>[% post.title %]</td>
+            <td>[% post.id %]</td>
 
             <td>
                 [% # Add a link to delete a book %]
-                <a href="[% c.uri_for(c.controller.action_for('delete'), [user.id]) %]">Delete</a>
+                <a href="[% c.uri_for(c.controller.action_for('delete'), [post.id]) %]">Delete</a>
                 [% # Add a link to edit a book %]
-                <a href="[% c.uri_for(c.controller.action_for('edit'), [user.id]) %]">Edit</a>
+                <a href="[% c.uri_for(c.controller.action_for('edit'), [post.id]) %]">Edit</a>
             </td>
         </tr>
     [% END -%]

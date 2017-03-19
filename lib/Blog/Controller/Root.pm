@@ -30,10 +30,9 @@ The root page (/)
 
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
-    $c->stash->{wrapper} = 'site/layouts/sitewrapper.tt';
-    $c->stash(template => 'site/home.tt');
+    #$c->stash(posts => [$c->model('DB::Post')->search({},{ order_by => 'id DESC' })]);
+    $c->stash(template => "site/home.tt");
 }
-
 =head2 default
 
 Standard 404 error page

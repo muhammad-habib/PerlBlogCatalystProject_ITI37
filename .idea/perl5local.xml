@@ -5,6 +5,7 @@
     <option name="ENABLE_REGEX_INJECTIONS" value="true" />
   </component>
   <component name="Perl5XSubsState">
+    <option name="isActual" value="false" />
     <option name="filesMap">
       <map>
         <entry key="/usr/lib/x86_64-linux-gnu/perl-base/auto/Cwd/Cwd.so" value="1457870058000" />

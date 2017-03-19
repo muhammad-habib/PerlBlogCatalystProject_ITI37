@@ -20,9 +20,13 @@
         <div id="menu">
             Navigation:
             <ul>
-                <li><a href="[% c.uri_for('/users/list') %]">Home</a></li>
-                <li><a href="[% c.uri_for('/')
-                    %]" title="Catalyst Welcome Page">Welcome</a></li>
+                <li><a href="[% c.uri_for('/') %]">Home</a></li>
+                [% IF c.user_exists %]
+                    <li><a href="[% c.uri_for('/logout')%]" title="login">Logout</a></li>
+                [% ELSE %]
+                    <li><a href="[% c.uri_for('/login')%]" title="login">Login</a></li>
+                    <li><a href="[% c.uri_for('/register')%]" title="login">Register</a></li>
+                [% END %]
             </ul>
         </div><!-- end menu -->
 

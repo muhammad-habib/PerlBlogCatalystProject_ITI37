@@ -1,7 +1,5 @@
 ---
-abstract: 'Catalyst based application'
-author:
-  - Habib,ali,mohamed
+abstract: ~
 build_requires:
   ExtUtils::MakeMaker: 6.36
   Test::More: '0.88'
@@ -10,7 +8,7 @@ configure_requires:
 distribution_type: module
 dynamic_config: 1
 generated_by: 'Module::Install version 1.17'
-license: perl
+license: unknown
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
@@ -22,7 +20,11 @@ no_index:
 requires:
   Catalyst::Action::RenderView: 0
   Catalyst::Controller::REST: 0
+  Catalyst::Plugin::Authentication: 0
   Catalyst::Plugin::ConfigLoader: 0
+  Catalyst::Plugin::Session: 0
+  Catalyst::Plugin::Session::State::Cookie: 0
+  Catalyst::Plugin::Session::Store::Memcached: 0
   Catalyst::Plugin::StackTrace: 0
   Catalyst::Plugin::Static::Simple: 0
   Catalyst::Plugin::StatusMessage: 0
@@ -32,6 +34,4 @@ requires:
   HTML::FormHandler::Model::DBIC: 0
   Moose: 0
   namespace::autoclean: 0
-resources:
-  license: http://dev.perl.org/licenses/
 version: '0.01'

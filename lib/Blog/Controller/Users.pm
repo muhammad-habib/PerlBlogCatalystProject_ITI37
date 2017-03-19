@@ -13,6 +13,15 @@ sub base :Chained('/') :PathPart('users') :CaptureArgs(0) {
 
     # Print a message to the debug log
     $c->log->debug('*** INSIDE BASE METHOD ***');
+    # If a user doesn't exist, force login
+    if (!$c->user_exists) {
+        # Dump a log message to the development server debug output
+        $c->log->debug('***Root::auto User not found, forwarding to /login');
+        # Redirect the user to the login page
+        $c->response->redirect($c->uri_for('/login'));
+        # Return 0 to cancel 'post-auto' processing and prevent use of application
+        return 0;
+    }
 }
 
 sub item : Chained('base') PathPart('') CaptureArgs(1) {
@@ -50,7 +59,7 @@ sub list :Chained('base') :PathPart('list') :Args(0) {
     $c->stash(users => [$c->model('DB::User')->search({}, {order_by => 'id DESC'})]);
     $c->load_status_msgs;
     $c->stash->{wrapper} = 'site/layouts/sitewrapper.tt';
-    $c->stash(template => 'users/list.tt');
+    $c->stash(template => 'users/list.tt',uid => $c->user->id);
 }
 
 sub delete : Chained('item') PathPart('delete') Args(0) {

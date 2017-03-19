@@ -11,22 +11,20 @@
 
 #   MakeMaker Parameters:
 
-#     ABSTRACT => q[Catalyst based application]
-#     AUTHOR => [q[Habib,ali,mohamed]]
+#     AUTHOR => []
 #     BUILD_REQUIRES => { ExtUtils::MakeMaker=>q[6.36], Test::More=>q[0.88] }
 #     CONFIGURE_REQUIRES => {  }
 #     DISTNAME => q[Blog]
 #     EXE_FILES => [q[script/blog_cgi.pl], q[script/blog_create.pl], q[script/blog_fastcgi.pl], q[script/blog_server.pl], q[script/blog_test.pl]]
-#     LICENSE => q[perl]
 #     NAME => q[Blog]
 #     NO_META => q[1]
-#     PREREQ_PM => { Catalyst::Action::RenderView=>q[0], Catalyst::Controller::REST=>q[0], Catalyst::Plugin::ConfigLoader=>q[0], Catalyst::Plugin::StackTrace=>q[0], Catalyst::Plugin::Static::Simple=>q[0], Catalyst::Plugin::StatusMessage=>q[0], Catalyst::Runtime=>q[5.90114], Config::General=>q[0], Data::Dumper=>q[0], ExtUtils::MakeMaker=>q[6.36], HTML::FormHandler::Model::DBIC=>q[0], Moose=>q[0], Test::More=>q[0.88], namespace::autoclean=>q[0] }
+#     PREREQ_PM => { Catalyst::Action::RenderView=>q[0], Catalyst::Controller::REST=>q[0], Catalyst::Plugin::Authentication=>q[0], Catalyst::Plugin::ConfigLoader=>q[0], Catalyst::Plugin::Session=>q[0], Catalyst::Plugin::Session::State::Cookie=>q[0], Catalyst::Plugin::Session::Store::Memcached=>q[0], Catalyst::Plugin::StackTrace=>q[0], Catalyst::Plugin::Static::Simple=>q[0], Catalyst::Plugin::StatusMessage=>q[0], Catalyst::Runtime=>q[5.90114], Config::General=>q[0], Data::Dumper=>q[0], ExtUtils::MakeMaker=>q[6.36], HTML::FormHandler::Model::DBIC=>q[0], Moose=>q[0], Test::More=>q[0.88], namespace::autoclean=>q[0] }
 #     TEST_REQUIRES => {  }
 #     VERSION => q[0.01]
 #     VERSION_FROM => q[lib/Blog.pm]
 #     dist => { PREOP=>q[$(PERL) -I. "-MModule::Install::Admin" -e "dist_preop(q($(DISTVNAME)))"] }
 #     realclean => { FILES=>q[MYMETA.yml] }
-#     test => { TESTS=>q[t/01app.t t/02pod.t t/03podcoverage.t t/controller_Auth.t t/controller_Users.t t/model_DB.t t/view_HTML.t] }
+#     test => { TESTS=>q[t/01app.t t/02pod.t t/03podcoverage.t t/controller_Auth.t t/controller_Login.t t/controller_Logout.t t/controller_Users.t t/model_DB.t t/view_HTML.t] }
 
 # --- MakeMaker post_initialize section:
 
@@ -175,10 +173,15 @@ MAN1PODS = script/blog_cgi.pl \
 	script/blog_fastcgi.pl \
 	script/blog_server.pl \
 	script/blog_test.pl
-MAN3PODS = lib/Blog.pm \
-	lib/Blog/Controller/Auth.pm \
+MAN3PODS = lib/Blog/Controller/Auth.pm \
+	lib/Blog/Controller/Login.pm \
+	lib/Blog/Controller/Logout.pm \
 	lib/Blog/Controller/Root.pm \
 	lib/Blog/Model/DB.pm \
+	lib/Blog/Schema/Result/CUser.pm \
+	lib/Blog/Schema/Result/CUserRole.pm \
+	lib/Blog/Schema/Result/Post.pm \
+	lib/Blog/Schema/Result/Role.pm \
 	lib/Blog/Schema/Result/User.pm \
 	lib/Blog/View/HTML.pm
 
@@ -206,11 +209,17 @@ PERL_ARCHIVE_AFTER =
 TO_INST_PM = _Deparsed_XSubs.pm \
 	lib/Blog.pm \
 	lib/Blog/Controller/Auth.pm \
+	lib/Blog/Controller/Login.pm \
+	lib/Blog/Controller/Logout.pm \
 	lib/Blog/Controller/Root.pm \
 	lib/Blog/Controller/Users.pm \
 	lib/Blog/Form/User.pm \
 	lib/Blog/Model/DB.pm \
 	lib/Blog/Schema.pm \
+	lib/Blog/Schema/Result/CUser.pm \
+	lib/Blog/Schema/Result/CUserRole.pm \
+	lib/Blog/Schema/Result/Post.pm \
+	lib/Blog/Schema/Result/Role.pm \
 	lib/Blog/Schema/Result/User.pm \
 	lib/Blog/View/HTML.pm
 
@@ -220,6 +229,10 @@ PM_TO_BLIB = _Deparsed_XSubs.pm \
 	blib/lib/Blog.pm \
 	lib/Blog/Controller/Auth.pm \
 	blib/lib/Blog/Controller/Auth.pm \
+	lib/Blog/Controller/Login.pm \
+	blib/lib/Blog/Controller/Login.pm \
+	lib/Blog/Controller/Logout.pm \
+	blib/lib/Blog/Controller/Logout.pm \
 	lib/Blog/Controller/Root.pm \
 	blib/lib/Blog/Controller/Root.pm \
 	lib/Blog/Controller/Users.pm \
@@ -230,6 +243,14 @@ PM_TO_BLIB = _Deparsed_XSubs.pm \
 	blib/lib/Blog/Model/DB.pm \
 	lib/Blog/Schema.pm \
 	blib/lib/Blog/Schema.pm \
+	lib/Blog/Schema/Result/CUser.pm \
+	blib/lib/Blog/Schema/Result/CUser.pm \
+	lib/Blog/Schema/Result/CUserRole.pm \
+	blib/lib/Blog/Schema/Result/CUserRole.pm \
+	lib/Blog/Schema/Result/Post.pm \
+	blib/lib/Blog/Schema/Result/Post.pm \
+	lib/Blog/Schema/Result/Role.pm \
+	blib/lib/Blog/Schema/Result/Role.pm \
 	lib/Blog/Schema/Result/User.pm \
 	blib/lib/Blog/Schema/Result/User.pm \
 	lib/Blog/View/HTML.pm \
@@ -457,10 +478,15 @@ POD2MAN = $(POD2MAN_EXE)
 
 
 manifypods : pure_all  \
-	lib/Blog.pm \
 	lib/Blog/Controller/Auth.pm \
+	lib/Blog/Controller/Login.pm \
+	lib/Blog/Controller/Logout.pm \
 	lib/Blog/Controller/Root.pm \
 	lib/Blog/Model/DB.pm \
+	lib/Blog/Schema/Result/CUser.pm \
+	lib/Blog/Schema/Result/CUserRole.pm \
+	lib/Blog/Schema/Result/Post.pm \
+	lib/Blog/Schema/Result/Role.pm \
 	lib/Blog/Schema/Result/User.pm \
 	lib/Blog/View/HTML.pm \
 	script/blog_cgi.pl \
@@ -475,10 +501,15 @@ manifypods : pure_all  \
 	  script/blog_server.pl $(INST_MAN1DIR)/blog_server.pl.$(MAN1EXT) \
 	  script/blog_test.pl $(INST_MAN1DIR)/blog_test.pl.$(MAN1EXT) 
 	$(NOECHO) $(POD2MAN) --section=$(MAN3EXT) --perm_rw=$(PERM_RW) -u \
-	  lib/Blog.pm $(INST_MAN3DIR)/Blog.$(MAN3EXT) \
 	  lib/Blog/Controller/Auth.pm $(INST_MAN3DIR)/Blog::Controller::Auth.$(MAN3EXT) \
+	  lib/Blog/Controller/Login.pm $(INST_MAN3DIR)/Blog::Controller::Login.$(MAN3EXT) \
+	  lib/Blog/Controller/Logout.pm $(INST_MAN3DIR)/Blog::Controller::Logout.$(MAN3EXT) \
 	  lib/Blog/Controller/Root.pm $(INST_MAN3DIR)/Blog::Controller::Root.$(MAN3EXT) \
 	  lib/Blog/Model/DB.pm $(INST_MAN3DIR)/Blog::Model::DB.$(MAN3EXT) \
+	  lib/Blog/Schema/Result/CUser.pm $(INST_MAN3DIR)/Blog::Schema::Result::CUser.$(MAN3EXT) \
+	  lib/Blog/Schema/Result/CUserRole.pm $(INST_MAN3DIR)/Blog::Schema::Result::CUserRole.$(MAN3EXT) \
+	  lib/Blog/Schema/Result/Post.pm $(INST_MAN3DIR)/Blog::Schema::Result::Post.$(MAN3EXT) \
+	  lib/Blog/Schema/Result/Role.pm $(INST_MAN3DIR)/Blog::Schema::Result::Role.$(MAN3EXT) \
 	  lib/Blog/Schema/Result/User.pm $(INST_MAN3DIR)/Blog::Schema::Result::User.$(MAN3EXT) \
 	  lib/Blog/View/HTML.pm $(INST_MAN3DIR)/Blog::View::HTML.$(MAN3EXT) 
 
@@ -492,32 +523,20 @@ manifypods : pure_all  \
 
 EXE_FILES = script/blog_cgi.pl script/blog_create.pl script/blog_fastcgi.pl script/blog_server.pl script/blog_test.pl
 
-pure_all :: $(INST_SCRIPT)/blog_cgi.pl $(INST_SCRIPT)/blog_create.pl $(INST_SCRIPT)/blog_fastcgi.pl $(INST_SCRIPT)/blog_test.pl $(INST_SCRIPT)/blog_server.pl
+pure_all :: $(INST_SCRIPT)/blog_cgi.pl $(INST_SCRIPT)/blog_test.pl $(INST_SCRIPT)/blog_server.pl $(INST_SCRIPT)/blog_create.pl $(INST_SCRIPT)/blog_fastcgi.pl
 	$(NOECHO) $(NOOP)
 
 realclean ::
 	$(RM_F) \
-	  $(INST_SCRIPT)/blog_cgi.pl $(INST_SCRIPT)/blog_create.pl \
-	  $(INST_SCRIPT)/blog_fastcgi.pl $(INST_SCRIPT)/blog_test.pl \
-	  $(INST_SCRIPT)/blog_server.pl 
+	  $(INST_SCRIPT)/blog_cgi.pl $(INST_SCRIPT)/blog_test.pl \
+	  $(INST_SCRIPT)/blog_server.pl $(INST_SCRIPT)/blog_create.pl \
+	  $(INST_SCRIPT)/blog_fastcgi.pl 
 
 $(INST_SCRIPT)/blog_cgi.pl : script/blog_cgi.pl $(FIRST_MAKEFILE) $(INST_SCRIPT)$(DFSEP).exists $(INST_BIN)$(DFSEP).exists
 	$(NOECHO) $(RM_F) $(INST_SCRIPT)/blog_cgi.pl
 	$(CP) script/blog_cgi.pl $(INST_SCRIPT)/blog_cgi.pl
 	$(FIXIN) $(INST_SCRIPT)/blog_cgi.pl
 	-$(NOECHO) $(CHMOD) $(PERM_RWX) $(INST_SCRIPT)/blog_cgi.pl
-
-$(INST_SCRIPT)/blog_create.pl : script/blog_create.pl $(FIRST_MAKEFILE) $(INST_SCRIPT)$(DFSEP).exists $(INST_BIN)$(DFSEP).exists
-	$(NOECHO) $(RM_F) $(INST_SCRIPT)/blog_create.pl
-	$(CP) script/blog_create.pl $(INST_SCRIPT)/blog_create.pl
-	$(FIXIN) $(INST_SCRIPT)/blog_create.pl
-	-$(NOECHO) $(CHMOD) $(PERM_RWX) $(INST_SCRIPT)/blog_create.pl
-
-$(INST_SCRIPT)/blog_fastcgi.pl : script/blog_fastcgi.pl $(FIRST_MAKEFILE) $(INST_SCRIPT)$(DFSEP).exists $(INST_BIN)$(DFSEP).exists
-	$(NOECHO) $(RM_F) $(INST_SCRIPT)/blog_fastcgi.pl
-	$(CP) script/blog_fastcgi.pl $(INST_SCRIPT)/blog_fastcgi.pl
-	$(FIXIN) $(INST_SCRIPT)/blog_fastcgi.pl
-	-$(NOECHO) $(CHMOD) $(PERM_RWX) $(INST_SCRIPT)/blog_fastcgi.pl
 
 $(INST_SCRIPT)/blog_test.pl : script/blog_test.pl $(FIRST_MAKEFILE) $(INST_SCRIPT)$(DFSEP).exists $(INST_BIN)$(DFSEP).exists
 	$(NOECHO) $(RM_F) $(INST_SCRIPT)/blog_test.pl
@@ -530,6 +549,18 @@ $(INST_SCRIPT)/blog_server.pl : script/blog_server.pl $(FIRST_MAKEFILE) $(INST_S
 	$(CP) script/blog_server.pl $(INST_SCRIPT)/blog_server.pl
 	$(FIXIN) $(INST_SCRIPT)/blog_server.pl
 	-$(NOECHO) $(CHMOD) $(PERM_RWX) $(INST_SCRIPT)/blog_server.pl
+
+$(INST_SCRIPT)/blog_create.pl : script/blog_create.pl $(FIRST_MAKEFILE) $(INST_SCRIPT)$(DFSEP).exists $(INST_BIN)$(DFSEP).exists
+	$(NOECHO) $(RM_F) $(INST_SCRIPT)/blog_create.pl
+	$(CP) script/blog_create.pl $(INST_SCRIPT)/blog_create.pl
+	$(FIXIN) $(INST_SCRIPT)/blog_create.pl
+	-$(NOECHO) $(CHMOD) $(PERM_RWX) $(INST_SCRIPT)/blog_create.pl
+
+$(INST_SCRIPT)/blog_fastcgi.pl : script/blog_fastcgi.pl $(FIRST_MAKEFILE) $(INST_SCRIPT)$(DFSEP).exists $(INST_BIN)$(DFSEP).exists
+	$(NOECHO) $(RM_F) $(INST_SCRIPT)/blog_fastcgi.pl
+	$(CP) script/blog_fastcgi.pl $(INST_SCRIPT)/blog_fastcgi.pl
+	$(FIXIN) $(INST_SCRIPT)/blog_fastcgi.pl
+	-$(NOECHO) $(CHMOD) $(PERM_RWX) $(INST_SCRIPT)/blog_fastcgi.pl
 
 
 
@@ -580,7 +611,7 @@ realclean_subdirs :
 # Delete temporary files (via clean) and also delete dist files
 realclean purge ::  clean realclean_subdirs
 	- $(RM_F) \
-	  $(FIRST_MAKEFILE) $(MAKEFILE_OLD) 
+	  $(MAKEFILE_OLD) $(FIRST_MAKEFILE) 
 	- $(RM_RF) \
 	  $(DISTVNAME) MYMETA.yml 
 
@@ -836,7 +867,7 @@ $(MAKE_APERL_FILE) : $(FIRST_MAKEFILE) pm_to_blib
 TEST_VERBOSE=0
 TEST_TYPE=test_$(LINKTYPE)
 TEST_FILE = test.pl
-TEST_FILES = t/01app.t t/02pod.t t/03podcoverage.t t/controller_Auth.t t/controller_Users.t t/model_DB.t t/view_HTML.t
+TEST_FILES = t/01app.t t/02pod.t t/03podcoverage.t t/controller_Auth.t t/controller_Login.t t/controller_Logout.t t/controller_Users.t t/model_DB.t t/view_HTML.t
 TESTDB_SW = -d
 
 testdb :: testdb_$(LINKTYPE)
@@ -863,12 +894,16 @@ testdb_static :: testdb_dynamic
 # Creates a PPD (Perl Package Description) for a binary distribution.
 ppd :
 	$(NOECHO) $(ECHO) '<SOFTPKG NAME="$(DISTNAME)" VERSION="$(VERSION)">' > $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '    <ABSTRACT>Catalyst based application</ABSTRACT>' >> $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '    <AUTHOR>Habib,ali,mohamed</AUTHOR>' >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '    <ABSTRACT></ABSTRACT>' >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '    <AUTHOR></AUTHOR>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <IMPLEMENTATION>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Catalyst::Action::RenderView" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Catalyst::Controller::REST" />' >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Catalyst::Plugin::Authentication" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Catalyst::Plugin::ConfigLoader" />' >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Catalyst::Plugin::Session" />' >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Catalyst::Plugin::Session::State::Cookie" />' >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Catalyst::Plugin::Session::Store::Memcached" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Catalyst::Plugin::StackTrace" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Catalyst::Plugin::Static::Simple" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Catalyst::Plugin::StatusMessage" />' >> $(DISTNAME).ppd
@@ -891,11 +926,17 @@ pm_to_blib : $(FIRST_MAKEFILE) $(TO_INST_PM)
 	  _Deparsed_XSubs.pm $(INST_LIB)/_Deparsed_XSubs.pm \
 	  lib/Blog.pm blib/lib/Blog.pm \
 	  lib/Blog/Controller/Auth.pm blib/lib/Blog/Controller/Auth.pm \
+	  lib/Blog/Controller/Login.pm blib/lib/Blog/Controller/Login.pm \
+	  lib/Blog/Controller/Logout.pm blib/lib/Blog/Controller/Logout.pm \
 	  lib/Blog/Controller/Root.pm blib/lib/Blog/Controller/Root.pm \
 	  lib/Blog/Controller/Users.pm blib/lib/Blog/Controller/Users.pm \
 	  lib/Blog/Form/User.pm blib/lib/Blog/Form/User.pm \
 	  lib/Blog/Model/DB.pm blib/lib/Blog/Model/DB.pm \
 	  lib/Blog/Schema.pm blib/lib/Blog/Schema.pm \
+	  lib/Blog/Schema/Result/CUser.pm blib/lib/Blog/Schema/Result/CUser.pm \
+	  lib/Blog/Schema/Result/CUserRole.pm blib/lib/Blog/Schema/Result/CUserRole.pm \
+	  lib/Blog/Schema/Result/Post.pm blib/lib/Blog/Schema/Result/Post.pm \
+	  lib/Blog/Schema/Result/Role.pm blib/lib/Blog/Schema/Result/Role.pm \
 	  lib/Blog/Schema/Result/User.pm blib/lib/Blog/Schema/Result/User.pm \
 	  lib/Blog/View/HTML.pm blib/lib/Blog/View/HTML.pm 
 	$(NOECHO) $(TOUCH) pm_to_blib
@@ -937,20 +978,20 @@ checkdeps ::
 	$(PERL) Makefile.PL --checkdeps
 
 installdeps ::
-	$(NOECHO) $(NOOP)
+	$(PERL) Makefile.PL --config= --installdeps=Catalyst::Plugin::Session::Store::Memcached,0
 
 installdeps_notest ::
-	$(NOECHO) $(NOOP)
+	$(PERL) Makefile.PL --config=notest,1 --installdeps=Catalyst::Plugin::Session::Store::Memcached,0
 
 upgradedeps ::
-	$(PERL) Makefile.PL --config= --upgradedeps=Test::More,0.88,Catalyst::Runtime,5.90114,Catalyst::Plugin::ConfigLoader,0,Catalyst::Plugin::Static::Simple,0,Catalyst::Plugin::StackTrace,0,Catalyst::Action::RenderView,0,Moose,0,Data::Dumper,0,Catalyst::Plugin::StatusMessage,0,HTML::FormHandler::Model::DBIC,0,Catalyst::Controller::REST,0,namespace::autoclean,0,Config::General,0
+	$(PERL) Makefile.PL --config= --upgradedeps=Catalyst::Plugin::Session::Store::Memcached,0,Test::More,0.88,Catalyst::Runtime,5.90114,Catalyst::Plugin::ConfigLoader,0,Catalyst::Plugin::Static::Simple,0,Catalyst::Plugin::StackTrace,0,Catalyst::Action::RenderView,0,Moose,0,Data::Dumper,0,Catalyst::Plugin::StatusMessage,0,HTML::FormHandler::Model::DBIC,0,Catalyst::Controller::REST,0,namespace::autoclean,0,Catalyst::Plugin::Authentication,0,Catalyst::Plugin::Session,0,Catalyst::Plugin::Session::State::Cookie,0,Config::General,0
 
 upgradedeps_notest ::
-	$(PERL) Makefile.PL --config=notest,1 --upgradedeps=Test::More,0.88,Catalyst::Runtime,5.90114,Catalyst::Plugin::ConfigLoader,0,Catalyst::Plugin::Static::Simple,0,Catalyst::Plugin::StackTrace,0,Catalyst::Action::RenderView,0,Moose,0,Data::Dumper,0,Catalyst::Plugin::StatusMessage,0,HTML::FormHandler::Model::DBIC,0,Catalyst::Controller::REST,0,namespace::autoclean,0,Config::General,0
+	$(PERL) Makefile.PL --config=notest,1 --upgradedeps=Catalyst::Plugin::Session::Store::Memcached,0,Test::More,0.88,Catalyst::Runtime,5.90114,Catalyst::Plugin::ConfigLoader,0,Catalyst::Plugin::Static::Simple,0,Catalyst::Plugin::StackTrace,0,Catalyst::Action::RenderView,0,Moose,0,Data::Dumper,0,Catalyst::Plugin::StatusMessage,0,HTML::FormHandler::Model::DBIC,0,Catalyst::Controller::REST,0,namespace::autoclean,0,Catalyst::Plugin::Authentication,0,Catalyst::Plugin::Session,0,Catalyst::Plugin::Session::State::Cookie,0,Config::General,0
 
 listdeps ::
-	@$(PERL) -le "print for @ARGV" 
+	@$(PERL) -le "print for @ARGV" Catalyst::Plugin::Session::Store::Memcached
 
 listalldeps ::
-	@$(PERL) -le "print for @ARGV" Test::More Catalyst::Runtime Catalyst::Plugin::ConfigLoader Catalyst::Plugin::Static::Simple Catalyst::Plugin::StackTrace Catalyst::Action::RenderView Moose Data::Dumper Catalyst::Plugin::StatusMessage HTML::FormHandler::Model::DBIC Catalyst::Controller::REST namespace::autoclean Config::General
+	@$(PERL) -le "print for @ARGV" Catalyst::Plugin::Session::Store::Memcached Test::More Catalyst::Runtime Catalyst::Plugin::ConfigLoader Catalyst::Plugin::Static::Simple Catalyst::Plugin::StackTrace Catalyst::Action::RenderView Moose Data::Dumper Catalyst::Plugin::StatusMessage HTML::FormHandler::Model::DBIC Catalyst::Controller::REST namespace::autoclean Catalyst::Plugin::Authentication Catalyst::Plugin::Session Catalyst::Plugin::Session::State::Cookie Config::General
 

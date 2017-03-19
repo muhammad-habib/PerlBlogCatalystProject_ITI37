@@ -23,10 +23,12 @@ use Catalyst qw/
     Static::Simple
     StackTrace
     StatusMessage
+    Authentication
     Session
     Session::Store::FastMmap
     Session::State::Cookie
-/;
+    Session::Store::Memcached
+    /;
 
 extends 'Catalyst';
 
@@ -56,6 +58,18 @@ __PACKAGE__->config(
         ],
     },
 );
+
+# Configure SimpleDB Authentication
+__PACKAGE__->config(
+    'Plugin::Authentication' => {
+        default => {
+            class           => 'SimpleDB',
+            user_model      => 'DB::CUser',
+            password_type   => 'clear',
+        },
+    },
+);
+
 # Start the application
 __PACKAGE__->setup();
 1;
